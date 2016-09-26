@@ -1,0 +1,3 @@
+[submodule "openldap"]
+	path = openldap
+	url = https://github.com/osixia/docker-openldap.git

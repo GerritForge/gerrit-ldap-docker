@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+
+  postgres:
+    image: postgres:9.5.4
+    environment:
+      - POSTGRES_USER=gerrit
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=reviewdb
+
+  master:
+    build: master
+    ports:
+      - "8080:8080"
+      - "29418:29418"
+    links:
+      - postgres
+    depends_on:
+      - postgres
+      - ldap
+    hostname: master
+
+  ldap:
+    build: ./openldap/image
+    ports:
+      - "389:389"
+      - "636:636"
+    environment:
+      - LDAP_ADMIN_PASSWORD=secret
+
